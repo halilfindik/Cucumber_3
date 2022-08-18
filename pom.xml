@@ -29,6 +29,7 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>7.5.0</version>
+            <scope>test</scope>
         </dependency>
 
         <!--TestNG için eklendi -->
@@ -36,7 +37,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.6.1</version>
+            <version>6.8.7</version>
             <scope>test</scope>
         </dependency>
 
@@ -46,6 +47,7 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-testng</artifactId>
             <version>7.5.0</version>
+            <scope>test</scope>
         </dependency>
         <!--  -->
         <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
@@ -54,6 +56,21 @@
             <artifactId>webdrivermanager</artifactId>
             <version>5.2.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.21</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        -->
 
     </dependencies>
 </project>

@@ -11,4 +11,4 @@ Feature: Login Functionality
 
     Given Navigate to basqar
     When Enter username and password and click login button
-    Then User should login successfuly
+    Then User should login successfully
