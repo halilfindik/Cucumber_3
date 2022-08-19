@@ -12,31 +12,43 @@ public class DialogContent extends Parent {
     }
 
     @FindBy(id="mat-input-0")
-    public WebElement username;
+    private WebElement username;
 
     @FindBy(id="mat-input-1")
-    public WebElement password;
+    private WebElement password;
 
     @FindBy(css="button[aria-label='LOGIN']")
-    public WebElement loginButton;
+    private WebElement loginButton;
 
     @FindBy(xpath="(//span[contains(text(),'Dashboard')])[2]")
-    public WebElement dashboard;
+    private WebElement dashboard;
 
     @FindBy(css = "[class='svg-inline--fa fa-plus']")
-    public WebElement addCountryButton;
+    private WebElement addCountryButton;
 
     @FindBy(css = "[id='ms-text-field-2']>input")
-    public WebElement newCountryNameInput;
+    private WebElement newCountryNameInput;
 
     @FindBy(css = "[id='ms-text-field-3']>input")
-    public WebElement newCountryCodeInput;
+    private WebElement newCountryCodeInput;
 
     @FindBy(xpath = "//span[text()='Save']")
-    public WebElement newCountrySaveButton;
+    private WebElement newCountrySaveButton;
 
-    @FindBy(css = "[class='ng-star-inserted']>div")
-    public WebElement countryAddSuccessMessage;
+    @FindBy(xpath = "//*[text()='Country successfully created']")
+    private WebElement countryAddSuccessMessageOld;
+
+    @FindBy(xpath = "//div[contains(text(),'successfully')]")
+    private WebElement countryAddSuccessMessage;
+
+    @FindBy(xpath = "//ms-text-field[@formcontrolname='shortName']//input")
+    private WebElement shortName;
+
+    @FindBy(xpath = "//div[contains(text(),'already exists')]")
+    private WebElement alreadyExists;
+
+    @FindBy(xpath = "//button[@aria-label='Close dialog']")
+    private WebElement closeDialog;
 
     WebElement myElement;
     public void findAndSend(String strElement, String value) {
@@ -46,6 +58,7 @@ public class DialogContent extends Parent {
             case "password"             : myElement=password; break;
             case "newCountryNameInput"  : myElement=newCountryNameInput; break;
             case "newCountryCodeInput"  : myElement=newCountryCodeInput; break;
+            case "shortName"            : myElement=shortName; break;
         }
         sendKeysFunction(myElement, value);
     }
@@ -56,16 +69,17 @@ public class DialogContent extends Parent {
             case "loginButton"          : myElement=loginButton; break;
             case "addCountryButton"     : myElement=addCountryButton; break;
             case "newCountrySaveButton" : myElement=newCountrySaveButton; break;
+            case "closeDialog"          : myElement =closeDialog; break;
         }
         clickFunction(myElement);
     }
     public void findAndContainsText(String strElement, String text) {
         switch (strElement)
         {
-            case "dashboard" : myElement=dashboard; break;
-            case "countryAddSuccessMessage" : myElement=countryAddSuccessMessage; break;
+            case "dashboard"                : myElement = dashboard; break;
+            case "countryAddSuccessMessage" : myElement = countryAddSuccessMessage; break;
+            case "alreadyExist"             : myElement = alreadyExists; break;
         }
         verifyContainsText(myElement, text);
     }
-
 }

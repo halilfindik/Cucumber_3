@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class _01_LoginSteps {
-    DialogContent dc=new DialogContent();
+    DialogContent dialogContent =new DialogContent();
 
     @Given("Navigate to basqar")
     public void navigateToBasqar() {
@@ -21,18 +21,18 @@ public class _01_LoginSteps {
 
     @When("Enter username and password and click login button")
     public void enterUsernameAndPasswordAndClickLoginButton() {
+        //Artık kendi içlerinde waitler var
+        //WebDriverWait wait=new WebDriverWait(Gwd.getDriver(), Duration.ofSeconds(30));
+        //wait.until(ExpectedConditions.visibilityOf(dialogContent.username));
 
-        WebDriverWait wait=new WebDriverWait(Gwd.getDriver(), Duration.ofSeconds(30));
-        wait.until(ExpectedConditions.visibilityOf(dc.username));
-
-        dc.findAndSend("username","richfield.edu");
-        dc.findAndSend("password","Richfield2020!");
-        dc.findAndClick("loginButton");
+        dialogContent.findAndSend("username","richfield.edu");
+        dialogContent.findAndSend("password","Richfield2020!");
+        dialogContent.findAndClick("loginButton");
 
     }
 
     @Then("User should login successfully")
     public void userShouldLoginSuccessfully() {
-        dc.findAndContainsText("dashboard","Dashboard");
+        dialogContent.findAndContainsText("dashboard","Dashboard");
     }
 }

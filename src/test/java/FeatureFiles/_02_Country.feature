@@ -1,10 +1,11 @@
 Feature: Country
 
-  Scenario: Create Country
-
+  Background:
     Given Navigate to basqar
     When Enter username and password and click login button
-    Then User should login successfully
-    And Navigate to Country Page
+
+  Scenario: Create A Country
+
+    Given Navigate to Country Page
     When Create a country
     Then Success message should be displayed

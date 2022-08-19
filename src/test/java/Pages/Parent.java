@@ -9,6 +9,7 @@ import org.testng.Assert;
 import java.time.Duration;
 
 public class Parent {
+    Duration dr=Duration.ofSeconds(50);
     public void sendKeysFunction(WebElement element, String value)
     {
         waitUntilVisible(element);
@@ -18,18 +19,28 @@ public class Parent {
     }
     public void clickFunction(WebElement element)
     {
-        waitUntilVisible(element);
+        waitUntilClickable(element);
         scrollToElement(element);
         element.click();
     }
     public void waitUntilVisible(WebElement element) {
-        WebDriverWait wait=new WebDriverWait(Gwd.getDriver(), Duration.ofSeconds(30));
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        WebDriverWait wait=new WebDriverWait(Gwd.getDriver(), dr);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public void scrollToElement(WebElement element) {
         JavascriptExecutor js=(JavascriptExecutor) Gwd.getDriver();
         js.executeScript("arguments[0].scrollIntoView();",element);
+    }
+
+    public void waitUntilClickable(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(Gwd.getDriver(), dr);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public void verifyContainsText(WebElement element, String text) {

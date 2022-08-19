@@ -27,5 +27,6 @@ public class LeftNav extends Parent{
             case "parameters"   : myElement=parameters; break;
             case "countries"    : myElement=countries; break;
         }
+        clickFunction(myElement);
     }
 }
