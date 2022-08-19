@@ -69,7 +69,7 @@ public class DialogContent extends Parent {
             case "loginButton"          : myElement=loginButton; break;
             case "addCountryButton"     : myElement=addCountryButton; break;
             case "newCountrySaveButton" : myElement=newCountrySaveButton; break;
-            case "closeDialog"          : myElement =closeDialog; break;
+            case "closeDialog"          : myElement=closeDialog; break;
         }
         clickFunction(myElement);
     }
@@ -78,7 +78,7 @@ public class DialogContent extends Parent {
         {
             case "dashboard"                : myElement = dashboard; break;
             case "countryAddSuccessMessage" : myElement = countryAddSuccessMessage; break;
-            case "alreadyExist"             : myElement = alreadyExists; break;
+            case "alreadyExists"            : myElement = alreadyExists; break;
         }
         verifyContainsText(myElement, text);
     }
