@@ -34,5 +34,6 @@ public class _01_LoginSteps {
     @Then("User should login successfully")
     public void userShouldLoginSuccessfully() {
         dialogContent.findAndContainsText("dashboard","Dashboard");
+        dialogContent.findAndClick("acceptCookies");
     }
 }

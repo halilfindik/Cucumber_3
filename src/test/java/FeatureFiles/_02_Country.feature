@@ -4,6 +4,7 @@ Feature: Country
     Given Navigate to basqar
     When Enter username and password and click login button
 
+  @SmokeTest @Regression
   Scenario: Create A Country
 
     Given Navigate to Country Page

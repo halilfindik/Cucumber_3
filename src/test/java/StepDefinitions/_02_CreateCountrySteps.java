@@ -6,6 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.commons.lang3.RandomStringUtils;
 
 public class _02_CreateCountrySteps {
     LeftNav leftNav=new LeftNav();
@@ -20,21 +21,24 @@ public class _02_CreateCountrySteps {
 
     @When("Create a country")
     public void createACountry() {
-        dialogContent.findAndClick("addCountryButton");
-        dialogContent.findAndSend("newCountryNameInput","Turks and Caicos Islands-6");
-        dialogContent.findAndSend("newCountryCodeInput","TCI6");
-        dialogContent.findAndClick("newCountrySaveButton");
+        String randomGenName= RandomStringUtils.randomAlphabetic(8);
+        String randomGenCode= RandomStringUtils.randomAlphanumeric(4);
+
+        dialogContent.findAndClick("addButton");
+        dialogContent.findAndSend("nameInput",randomGenName);
+        dialogContent.findAndSend("codeInput",randomGenCode);
+        dialogContent.findAndClick("saveButton");
     }
     @Then("Success message should be displayed")
     public void successMessageDisplayed() {
-        dialogContent.findAndContainsText("countryAddSuccessMessage","success");
+        dialogContent.findAndContainsText("successMessage","success");
     }
 
     @When("Create a country name as {string} code as {string}")
     public void createACountryNameAsCodeAs(String name, String code) {
-        dialogContent.findAndClick("addCountryButton");
-        dialogContent.findAndSend("newCountryNameInput",name);
-        dialogContent.findAndSend("newCountryCodeInput",code);
-        dialogContent.findAndClick("newCountrySaveButton");
+        dialogContent.findAndClick("addButton");
+        dialogContent.findAndSend("nameInput",name);
+        dialogContent.findAndSend("codeInput",code);
+        dialogContent.findAndClick("saveButton");
     }
 }
