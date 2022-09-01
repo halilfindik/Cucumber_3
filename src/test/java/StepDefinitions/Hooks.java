@@ -36,13 +36,13 @@ public class Hooks {
             File ssFile=screenshot.getScreenshotAs(OutputType.FILE);
 
             // Extent Report'a ekliyor
-            ExtentTestManager.getTest().addScreenCaptureFromBase64String(getBase64Screenshot());
+            // ExtentTestManager.getTest().addScreenCaptureFromBase64String(getBase64Screenshot());
 
             try {
                 FileUtils.copyFile(ssFile,
-                        new File(String.format("target/FailedScreenShots/" + scenario.getId() + date.format(formatter)+".png")));
+                        new File("target/FailedScreenShots/" + scenario.getId() + date.format(formatter)+".png"));
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
         // ekran görüntüsü al senaryo hatalı ise koyacağız

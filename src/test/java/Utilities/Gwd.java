@@ -4,41 +4,81 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Gwd {
     public static WebDriver driver;
 
+    // Bana öncelikle browser tipi parametre olarak lazım, ona göre oluşturacağım
+    // her bir paralel çalışan süreç için sadece o sürece özel static bir değişken lazım
+    // çünkü runner class'daki işaret edilen tüm senaryolarda aynısnın çalışması lazım
+    // demek ki her pipeline için (Local) ve de ona özel static bir driver'a ihtiyacım var
+    // donanımdaki adı pipeline, yazılımdaki adı Thread, paralel çalışan her bir süreç
+
+    private static final ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>(); // WebDriver-1, WebDriver-2; (final yaptım)
+    public static ThreadLocal<String> threadBrowserName = new ThreadLocal<>(); // "chrome", "firefox" ...
+
+    // threadDriver.get() - > ilgili thread'deki driver'ı verecek
+    // threadDriver.set(driver) - > ilgili thread'e driver atanıyor
+
     public static WebDriver getDriver()
     {
-        if (driver==null) {
-            Logger.getLogger("").setLevel(Level.SEVERE);
-            System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "Error");
-            System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY,"true");
+        // extent report türkçe bilg çalışmaması sebebiyle kondu
+         Locale.setDefault(new Locale("EN"));
+         System.setProperty("user.language", "EN");
 
+        Logger.getLogger("").setLevel(Level.SEVERE);
+        System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "Error");
 
-            WebDriverManager.chromedriver().setup();
-            driver=new ChromeDriver();
-
-            // firefox
-            // WebDriverManager.firefoxdriver().setup();
-            // driver=new FirefoxDriver();
+        if (threadBrowserName.get() == null) // paralel çalışmayan yani XML den parametreyle gelmeyen ger çağıran
+        {
+            threadBrowserName.set("chrome"); // Basic araynlar için
         }
-        return driver;
+
+        if (threadDriver.get() == null) {
+
+            String browserName = threadBrowserName.get(); // bu threaddeki browsername'i verdi.
+            switch (browserName) {
+                case "chrome":
+                    WebDriverManager.chromedriver().setup();
+                    threadDriver.set(new ChromeDriver()); // bu thread e chrome istenmişşse ve yoksa bir tane ekleniyor
+                    break;
+
+                case "firefox":
+                    WebDriverManager.firefoxdriver().setup();
+                    threadDriver.set(new FirefoxDriver());  // bu thread e firefox istenmişşse ve yoksa bir tane ekleniyor
+                    break;
+
+                case "safari":
+                    WebDriverManager.safaridriver().setup();
+                    threadDriver.set(new SafariDriver());
+                    break;
+
+                case "edge":
+                    WebDriverManager.edgedriver().setup();
+                    threadDriver.set(new EdgeDriver());
+                    break;
+            }
+        }
+
+        return threadDriver.get();
     }
 
     public static void quitDriver() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        if (driver!=null) {
-            driver.quit();
-            driver=null;
+        Bekle(5);
+
+        if (threadDriver.get() != null) { // driver varsa
+            threadDriver.get().quit();
+
+            WebDriver driver = threadDriver.get();
+            driver = null;
+            threadDriver.set(driver); // tekrar gelirse için boş olmuş olsun
         }
     }
     public static void Bekle(int saniye) {

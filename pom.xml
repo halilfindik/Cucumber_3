@@ -49,7 +49,9 @@
             <version>7.5.0</version>
             <scope>test</scope>
         </dependency>
-        <!--  -->
+
+        <!-- WebDriver  -->
+        <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
         <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
@@ -91,6 +93,13 @@
             <version>5.7.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -101,16 +110,21 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M1</version>
                 <configuration>
+<!--                   XML paralel çalışmada master report için kondu-->
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/java/XMLFiles/ParallelTesting_MasterReport.xml</suiteXmlFile>
+                    </suiteXmlFiles>
 
-                    <includes>
-                        <!-- for  run class or classes  **/:bulunduğu lokasyonu bütün klasörlere göre bulabiliyor   -->
-                        <include>**/_04_TestRunnerSmoke.java</include>
-                        <!--                        <include>**/runners/*TestRunner*.java</include>-->
-                    </includes>
+<!--                    Paralele çalışma yok iken (.xml kullanılmaması halinde) direk runner class'ı çalıştırmak için aşağıdaki bölüm kullanılır.-->
+<!--                    <includes>-->
+<!--                        for  run class or classes  **/:bulunduğu lokasyonu bütün klasörlere göre bulabiliyor   -->
+<!--                        <include>**/_04_TestRunnerSmoke.java</include>-->
+<!--                        <include>**/runners/*TestRunner*.java</include>-->
+<!--                        </includes> -->
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
-
+            <!-- true için "Its use is NOT RECOMMENDED, but quite convenient on occasion." denilmiş, şimdilik false yaptım -->
             <plugin>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
