@@ -9,13 +9,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-/**
- * Verilen Exceldeki password bilgisini bir metod aracılığıyla bularak yazdırınız,
- * yani metoda "password" kelimesi gönderilecek, dönen değer password'un kendisi olacak.
- * src/test/java/ApachePOI/resources/LoginData.xlsx
- */
-public class _05_GetASpecificData {
+public class _06_Soru {
+    /*
+       Bir önceki soruda, Kullanıcıya 1.sütundaki tüm değerleri bir liste halinde kullanıcıya
+       yanlarında bir numara olarak sunalım. Kullanıcı hangi numarayı girerse o satırın
+       yanındaki tüm bilgiler gösterilsin.
+       Username için 1
+       Password için 2
+    */
     public static void main(String[] args) throws IOException {
 
         String path="src/test/java/ApachePOI/resource/LoginData.xlsx";
@@ -23,7 +26,16 @@ public class _05_GetASpecificData {
         Workbook workbook= WorkbookFactory.create(inputStream);
         Sheet sheet = workbook.getSheet("Login");
 
-        System.out.println(readExcelData(sheet,"Password"));
+        for (int i = 0; i < sheet.getPhysicalNumberOfRows(); i++) {
+            System.out.println(i+1 + ". - " + sheet.getRow(i).getCell(0).toString());
+        }
+
+        System.out.print("Make a selection...:(1-" + sheet.getPhysicalNumberOfRows() + ") ");
+        Scanner input = new Scanner(System.in);
+        int selection=input.nextInt();
+        String searchData=sheet.getRow(selection-1).getCell(0).toString();
+
+        System.out.println(readExcelData(sheet,searchData));
 
     }
     public static List<String> readExcelData(Sheet sheet, String searchData) {
@@ -38,7 +50,7 @@ public class _05_GetASpecificData {
                     result.add(row.getCell(j+1).toString());
                 }
             }
-        }
-        return result;
+        } return result;
     }
+
 }

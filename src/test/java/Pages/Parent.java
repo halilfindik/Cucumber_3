@@ -54,4 +54,9 @@ public class Parent {
         By fuseBar=By.cssSelector("fuse-progress-bar > *");
         wait.until(ExpectedConditions.numberOfElementsToBe(fuseBar,0));
     }
+    public void scrollToUpElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) Gwd.getDriver();
+        js.executeScript("arguments[0].setAttribute('style', 'top:0px')", element);
+        js.executeScript("arguments[0].scrollIntoView();", element);
+    }
 }

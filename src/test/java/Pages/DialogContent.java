@@ -8,6 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class DialogContent extends Parent {
 
     public DialogContent() {
@@ -163,10 +165,14 @@ public class DialogContent extends Parent {
         verifyContainsText(myElement, text);
     }
     public void searchAndDelete(String searchText) {
+
         findAndSend("searchInput",searchText); // arama kutucuğuna kelimeyi yaz
         findAndClick("searchButton"); // arama butonuna bas
 
-        waitUntilLoading();
+        //waitUntilLoading();
+
+        WebDriverWait wait=new WebDriverWait(Gwd.getDriver(), Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.textToBe(By.cssSelector("div[fxlayoutalign='center center'][class='control-full']"),"Search"));
 
         findAndClick("deleteButton"); // silme butonuna bas
         findAndClick("deleteDialogButton"); // silmeyi onayla

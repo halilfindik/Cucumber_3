@@ -6,7 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class _04_CitizenshipSteps {
+public class    _04_CitizenshipSteps {
     DialogContent dialogContent=new DialogContent();
     @And("Navigate to Citizenship Page")
     public void navigateToCitizenshipPage() {
