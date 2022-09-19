@@ -39,7 +39,7 @@ public class _10_Soru {
             }
         }
 
-        FileOutputStream outputStream=new FileOutputStream("src/test/java/ApachePOI/resource/CarpimTablosu.xlsx");
+        FileOutputStream outputStream=new FileOutputStream("src/test/java/ApachePOI/resource/CarpimTablosu_Dusey.xlsx");
         workbook.write(outputStream);
         workbook.close();
         outputStream.close();
